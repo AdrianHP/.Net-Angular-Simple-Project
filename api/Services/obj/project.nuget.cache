@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "st1E3EkGyW4K4dMsrsYYRbI/6hs90/+FRgJhRzVZ89fFWiG2ZsZJ3JFPrvbg6GdDYtVkMK5sy5XwhA24UFdzIw==",
+  "success": true,
+  "projectFilePath": "C:\\Adrian\\Work\\ISUCorp\\.net-angualr\\.Net-Angular-Simple-Project\\api\\Services\\Services.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\adria\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\adria\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
