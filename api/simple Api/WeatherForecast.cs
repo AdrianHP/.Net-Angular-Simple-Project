@@ -1,4 +1,4 @@
-namespace simple_Api
+namespace Server
 {
     public class WeatherForecast
     {

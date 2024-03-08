@@ -16,7 +16,7 @@ namespace Services.Interfaces.CoreInterfaces
     /// default and comprehensive implementation of CRUD/paging capabilities.
     /// </remarks>
     /// <typeparam name="TContext">Database context type.</typeparam>
-    public partial interface IDataService<TContext>
+    public partial interface IDataCRUDService<TContext>
         where TContext : IDataDbContext
     {
         /// <summary>
@@ -529,6 +529,6 @@ namespace Services.Interfaces.CoreInterfaces
             where TEntity : class;
     }
 
-    public interface IDataService: IDataService<IDataContext>
+    public interface IDataService: IDataCRUDService<IDataContext>
     { }
 }
