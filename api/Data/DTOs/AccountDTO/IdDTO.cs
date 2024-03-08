@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetHealth.Core.Interfaces.CoreInterfaces
+namespace Data.DTOs.AccountDTO
 {
-    public interface IBaseDTO
+    public class IdDTO
     {
+        public string Id { get; set; }
     }
 }

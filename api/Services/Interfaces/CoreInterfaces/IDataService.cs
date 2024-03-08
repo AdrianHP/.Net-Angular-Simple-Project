@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using Data.Interfaces.CoreInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PetHealth.Core.Interfaces.CoreInterfaces
+namespace Services.Interfaces.CoreInterfaces
 {
     /// <summary>
     /// Defines a list of generalized methods to implement CRUD/paging operations with database context.
@@ -528,6 +529,6 @@ namespace PetHealth.Core.Interfaces.CoreInterfaces
             where TEntity : class;
     }
 
-    public interface IDataService: IDataService<IApiContext>
+    public interface IDataService: IDataService<IDataContext>
     { }
 }

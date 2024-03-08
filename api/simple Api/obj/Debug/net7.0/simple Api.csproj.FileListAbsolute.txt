@@ -33,3 +33,9 @@ C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\o
 C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\obj\Debug\net7.0\ref\simple Api.dll
 C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
 C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Humanizer.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Adrian\Work\ISUCorp\.net-angualr\.Net-Angular-Simple-Project\api\simple Api\bin\Debug\net7.0\System.CodeDom.dll

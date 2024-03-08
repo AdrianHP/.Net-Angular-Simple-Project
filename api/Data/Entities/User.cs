@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PetHealth.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
