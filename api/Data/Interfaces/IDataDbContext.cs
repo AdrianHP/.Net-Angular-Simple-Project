@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interfaces.CoreInterfaces
+namespace Data.Interfaces
 {
-    public interface IApiDbContext
+    public interface IDataDbContext
     {
         DatabaseFacade Database { get; }
 

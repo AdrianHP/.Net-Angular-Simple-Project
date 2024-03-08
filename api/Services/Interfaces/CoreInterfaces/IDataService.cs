@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Data.Interfaces.CoreInterfaces;
+using Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Services.Interfaces.CoreInterfaces
     /// </remarks>
     /// <typeparam name="TContext">Database context type.</typeparam>
     public partial interface IDataService<TContext>
-        where TContext : IApiDbContext
+        where TContext : IDataDbContext
     {
         /// <summary>
         /// Database context that the service works with.

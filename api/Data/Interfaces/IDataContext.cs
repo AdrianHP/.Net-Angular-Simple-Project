@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Interfaces.CoreInterfaces
+namespace Data.Interfaces
 {
-    public interface IDataContext : IApiDbContext
+    public interface IDataContext : IDataDbContext
     {
         #region Account
 
