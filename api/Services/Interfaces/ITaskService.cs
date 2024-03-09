@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Data.DTOs.EntityDTO;
 using Data.Entities;
 using Data.Interfaces;
 using Services.Interfaces.CoreInterfaces;
 
 namespace Services.Interfaces
 {
-    public interface ITaskService: IRepository<Data.Entities.Task>
+    public interface ITaskService
     {
-        public new IQueryable<Data.Entities.Task> GetAll();
-        public Data.Entities.Task GetById(long id);
-        public new void AddEntity(Data.Entities.Task entity);
-        public new void UpdateEntity(Data.Entities.Task current, Data.Entities.Task update);
-        public new void DeleteEntity(Data.Entities.Task entity);
+
+        Task<List<TaskDTO>> GetUserTask(string userName, CancellationToken cancellationToken);
     }
 }

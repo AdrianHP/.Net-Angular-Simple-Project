@@ -18,5 +18,7 @@ namespace Data.Entities
 
         public string Version { get; set; }
 
+        public ICollection<Task> Tasks { get; set; }
+
     }
 }

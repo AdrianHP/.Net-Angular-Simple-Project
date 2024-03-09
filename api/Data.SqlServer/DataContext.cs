@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Data.SqlServer
 {
@@ -34,6 +35,15 @@ namespace Data.SqlServer
 
         #endregion
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<User>()
+                 .HasMany(e => e.Tasks)
+                 .WithOne(e => e.AssignedUser)
+                 .HasForeignKey(e => e.AssignedUserId)
+                 .IsRequired();
+        }
 
         public async System.Threading.Tasks.Task UpdateManyAsync<TEntity>(List<TEntity> items, CancellationToken cancellationToken) where TEntity : class
         {

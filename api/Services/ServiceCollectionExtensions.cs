@@ -55,10 +55,9 @@ namespace Services
             });
 
 
-            //services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IDataCRUDService<IDataContext>, DataCRUDService<IDataContext>>();
-
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITaskService, TaskService>();
             return services;
         }
     }

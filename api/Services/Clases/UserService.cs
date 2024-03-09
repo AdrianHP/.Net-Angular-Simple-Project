@@ -35,7 +35,7 @@ public class UserService : IUserService
     private readonly IMapper _mapper;
     private readonly IDataContext _context;
     private readonly IConfiguration _configuration;
-    private readonly User? _user;
+    private User? _user;
 
     public UserService(UserManager<User> userManager,
         SignInManager<User> signInManager, IHttpContextAccessor httpContextAccessor,
@@ -74,17 +74,17 @@ public class UserService : IUserService
     public async Task<AuthResultDTO> Login(LoginDTO dto, CancellationToken cancellationToken = default)
     {
 
-        var user = await _userManager.Users
+        _user = await _userManager.Users
                 .Include(o => o.UserPermissions).ThenInclude(o => o.Permission)
                 .FirstOrDefaultAsync(u => u.Email == dto.Email || u.UserName == dto.Email, cancellationToken) ?? throw new UserNotExistsException();
 
         // Check password
-        if (!await _userManager.CheckPasswordAsync(user, dto.Password))
-            throw new WrongCredentialsException("Incorrect user name or password.");
+        if (!await _userManager.CheckPasswordAsync(_user, dto.Password))
+            throw new WrongCredentialsException("Incorrect password.");
 
-        var loggedUser = _mapper.Map<UserDTO>(user);
+        var loggedUser = _mapper.Map<UserDTO>(_user);
 
-        return new AuthResultDTO { UserId = user.Id, LoggedUser = loggedUser };
+        return new AuthResultDTO { UserId = _user.Id, LoggedUser = loggedUser };
     }
 
     public async System.Threading.Tasks.Task Logout()
