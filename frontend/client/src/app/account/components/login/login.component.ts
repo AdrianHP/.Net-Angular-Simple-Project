@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ILogin } from '../../interfaces/login';
+import { IUser } from '../../interfaces/user';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     password: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,private storageService: StorageService,) {}
 
   ngOnInit() {
     // this.router.navigate(['home']);
@@ -61,6 +63,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.authService.login(this.loginForm.value).subscribe({
       next: (userData) => {
+        const token = userData.token;
+        const authResult = userData.loggedUser;
+        const extractedUser: IUser = authResult.loggedUser;
+        this.storageService.saveToken(token);
+        this.storageService.saveUser(extractedUser);
+        this.console.log (userData)
         this.router.navigate(['home']);
       },
       error: (err) => {

@@ -13,7 +13,6 @@ const AUTH_API = 'https://localhost:44390/api/account/';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-
   }),
 };
 
@@ -28,29 +27,25 @@ export class AuthService {
     private router: Router
   ) {}
 
+  errorMesage = "";
+
+
+
   login(loginData: ILogin): Observable<any> {
-    return this.http.post<any>(AUTH_API + 'login', loginData, httpOptions).pipe(
-      catchError((err) => {
-        console.log(err);
-        let errorMessage = 'An unknown error occurred!';
-        if (err.error.message === 'Bad credentials') {
-          errorMessage = 'The email address or password you entered is invalid';
-        }
-        return throwError(() => new Error(errorMessage));
+    return this.http.post<any>(AUTH_API + 'login', loginData).pipe(
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => new Error(error.error));
       }),
-      tap((response) => {
-        const token = response.token;
-        const authResult = response.loggedUser;
-        const extractedUser: IUser = authResult.loggedUser;
-        this.storageService.saveToken(token);
-        this.storageService.saveUser(extractedUser);
-        this.AuthenticatedUser$.next(extractedUser);
-      })
     );
   }
 
-  register(registerData: IUserRegistration): Observable<any> {
-    return this.http.post(AUTH_API + 'register', registerData, httpOptions);
+  register(registerData: any): Observable<any> {
+    try {
+      return this.http.post(AUTH_API + 'register', registerData, httpOptions);
+    } catch (error: any) {
+      return throwError(() => new Error(error.error));
+    }
   }
 
   logout(): Observable<any> {

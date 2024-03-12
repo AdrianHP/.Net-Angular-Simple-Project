@@ -1,5 +1,8 @@
 
 <div>
+  <div  style="color: red;"  *ngIf="errorMessage">
+    <div>{{errorMessage}}</div>
+  </div>
   <!-- <a [routerLink]="['../register']">Go to Register</a> -->
   <mat-card>
     <mat-card-title>Login</mat-card-title>
@@ -8,8 +11,8 @@
 
         <mat-form-field>
           <input type="email" matInput placeholder="Email" formControlName="email">
-          <!-- Here we can display error messages/hints for the user, if one of the Validators adds an error to the email
-           with the .touched check we only display the hints if the input was touched by the users -->
+
+
           <mat-error *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.hasError('required')">
             Email is required</mat-error>
           <mat-error *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.hasError('email')">
@@ -17,13 +20,11 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input type="password" matInput placeholder="Password" minlength="6" formControlName="password">
+          <input type="password" matInput placeholder="Password" formControlName="password">
           <mat-error
             *ngIf="this.loginForm.get('password')?.touched && this.loginForm.get('password')?.hasError('required')">
             Password is required</mat-error>
-            <mat-error
-            *ngIf="this.loginForm.get('password')?.touched && this.loginForm.get('password')?.hasError('minlength')">
-            Password must be at least 6 characters</mat-error>
+
         </mat-form-field>
 
         <div class="button">
@@ -35,3 +36,5 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+
