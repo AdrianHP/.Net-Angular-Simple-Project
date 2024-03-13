@@ -77,16 +77,17 @@ export class TasksComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  fetchTasks() {
-    this.taskService.getUserTasks().subscribe({
-      next: (userData:any) => {
+  async fetchTasks() {
+    await this.taskService
+      .getUserTasks()
+      .then((userData: any) => {
         this.dataSource.data = userData;
-
-      },
-      error: (err:any) => {
+        this.cd.detectChanges();
+        console.log(userData);
+      })
+      .catch((err: any) => {
         this.errorMessage = err;
-      },
-    });
+      });
   }
 
   addTask() {
@@ -97,10 +98,11 @@ export class TasksComponent implements OnInit {
       data: dialogData,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        console.log(result);
-        this.taskService.addTasks(result);
+        await this.taskService.addTasks(result).then(() => {
+          this.fetchTasks();
+        });
       }
     });
   }
@@ -116,24 +118,22 @@ export class TasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.taskService.editTask(result);
+        this.taskService.editTask(result).then(async () => {
+          await this.fetchTasks();
+        });
       }
     });
-    this.fetchTasks();
-    this.cd.detectChanges();
   }
 
   deleteTask(id: any) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        console.log(id);
-        this.taskService.deleteTask(id);
-        this.dataSource.data.filter((x) => x.id == id);
+        await this.taskService.deleteTask(id).then(() => {
+          this.fetchTasks();
+        });
       }
     });
-    this.fetchTasks();
-    this.cd.detectChanges();
   }
 }

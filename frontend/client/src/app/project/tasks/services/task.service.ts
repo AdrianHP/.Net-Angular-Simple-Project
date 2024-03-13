@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { IUser } from 'src/app/account/interfaces/user';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/account/services/storage.service';
 import { ITask } from '../interfaces/task';
+import { IHttpResponsesHandler } from './interfaces/interfaces';
 
 const AUTH_API = 'https://localhost:44390/api/Task/';
 
@@ -28,33 +29,52 @@ export class TaskService {
 
   errorMesage = '';
 
+  protected handleRequest<TResult>(
+    request: Observable<TResult>,
+    responseHandler?: IHttpResponsesHandler): Promise<TResult> {
 
-  getUserTasks() {
-    return this.http
-      .get<ITask[]>(AUTH_API + 'getUSerTasks', this.httpOptions)
-      .pipe(
-        catchError((error) => {
-          console.log(error);
-          return throwError(() => new Error(error.error));
-        })
-      );
+    const promise = request.toPromise() as Promise<TResult>;
+    if (responseHandler) {
+        return promise.then((response:any) => {
+            if (responseHandler.handleSuccess) {
+                responseHandler.handleSuccess();
+            }
+            return Promise.resolve(response);
+        }).catch((errorResponse: HttpErrorResponse) => {
+            if (responseHandler.handleError) {
+                responseHandler.handleError(errorResponse);
+            }
+            return Promise.reject(errorResponse);
+        });
+    } else {
+        return promise;
+    }
+}
+
+
+  async getUserTasks():Promise<ITask[]> {
+    return this.handleRequest<ITask[]>(
+      this.http.get<ITask[]>(AUTH_API + 'getUSerTasks', this.httpOptions))
   }
 
-  addTasks(task: ITask) {
+  async addTasks(task: ITask) {
     task.assignedUserId = (this.storageService.getUser() as IUser).id;
     task.isCompleted = false;
     task.id = 0;
-    this.http.post(AUTH_API, task,this.httpOptions).subscribe();
+    return this.handleRequest<void>(
+      this.http.post<void>(AUTH_API, task,this.httpOptions))
   }
 
   async editTask(task: ITask) {
     task.assignedUserId = (this.storageService.getUser() as IUser).id;
-    this.http.put(AUTH_API+ task.id, task,this.httpOptions).subscribe();
+    return this.handleRequest<void>(
+      this.http.put<void>(AUTH_API+ task.id, task,this.httpOptions))
   }
 
-  deleteTask(id: string) {
+  async deleteTask(id: string) {
     try {
-      this.http.delete(AUTH_API + id, this.httpOptions).subscribe();
+      return this.handleRequest<void>(
+        this.http.delete<void>(AUTH_API + id, this.httpOptions))
     } catch (error) {}
   }
 }
