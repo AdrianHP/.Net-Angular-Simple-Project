@@ -10,17 +10,26 @@ import { BehaviorSubject, Subject, tap } from 'rxjs';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit{
+export class RegisterComponent implements OnInit {
   registerForm = new FormGroup(
     {
       email: new FormControl(null, [Validators.required, Validators.email]),
       userName: new FormControl(null, [Validators.required]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
-      password: new FormControl(null, [Validators.required,Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(
+          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/
+        ),
+      ]),
       passwordConfirm: new FormControl(null, [Validators.required]),
     },
-    { validators: [CustomValidators.strongPassword,CustomValidators.passwordsMatching ,]
+    {
+      validators: [
+        CustomValidators.strongPassword,
+        CustomValidators.passwordsMatching,
+      ],
     }
   );
 
@@ -28,8 +37,7 @@ export class RegisterComponent implements OnInit{
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   register() {
     if (!this.registerForm.valid) {

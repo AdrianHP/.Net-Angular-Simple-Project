@@ -1,6 +1,5 @@
-import { IUser } from "./user";
-export interface IAuthresult
-{
+import { IUser } from './user';
+export interface IAuthresult {
   userId: string;
-  loggedUser: IUser
+  loggedUser: IUser;
 }

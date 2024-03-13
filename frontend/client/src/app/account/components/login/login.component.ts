@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     var user = this.storageService.getUser();
     if (user) {
       this.router.navigate(['home']);
-      this.console.log(user)
+      this.console.log(user);
     }
   }
 

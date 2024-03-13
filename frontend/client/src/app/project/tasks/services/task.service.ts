@@ -5,7 +5,7 @@ import { IUser } from 'src/app/account/interfaces/user';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/account/services/storage.service';
 import { ITask } from '../interfaces/task';
-import { IHttpResponsesHandler } from './interfaces/interfaces';
+import { IHttpResponsesHandler } from '../interfaces/http';
 
 const AUTH_API = 'https://localhost:44390/api/Task/';
 
