@@ -1,5 +1,5 @@
 export interface ITask {
-  taskId: number;
+  id: number;
   title: string;
   description: string;
   dueDate: Date;

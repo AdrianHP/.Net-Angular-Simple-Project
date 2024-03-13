@@ -1,11 +1,7 @@
-<p>tasks works!</p>
-<button (click)="getTasks()">asd</button>
+<button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-    <ng-container
-      *ngFor="let column of displayedColumns"
-      [matColumnDef]="column.field"
-    >
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.field">
       <th mat-header-cell *matHeaderCellDef>
         <div style="display: flex; align-items: center">
           <span mat-sort-header>{{column.name}}</span>
@@ -28,9 +24,5 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
   </table>
 
-  <mat-paginator
-    [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 50]"
-    showFirstLastButtons
-  ></mat-paginator>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons></mat-paginator>
 </div>
