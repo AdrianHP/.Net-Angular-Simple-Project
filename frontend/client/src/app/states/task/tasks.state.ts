@@ -1,4 +1,4 @@
-import { Task } from "src/app/models/task";
+import { Task } from "src/app/project/tasks/interfaces/task";
 
 
 export interface TasksState {

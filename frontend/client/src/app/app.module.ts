@@ -9,13 +9,11 @@ import { FormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TaskComponent } from './project/tasks/task/task.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent,
   ],
   imports: [
     BrowserModule,

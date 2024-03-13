@@ -14,45 +14,26 @@ import { StorageService } from '../../services/storage.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   errorMessage!: string;
-  AuthUserSub!: Subscription;
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     password: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private router: Router,private storageService: StorageService,) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit() {
-    // this.router.navigate(['home']);
-    // this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
-    //   next : user => {
-    //     if(user) {
-    //       this.router.navigate(['home']);
-    //     }
-    //   }
-    // })
-  }
-
-  onSubmitLogin(formLogin: NgForm) {
-    if (!formLogin.valid) {
-      return;
+    var user = this.storageService.getUser();
+    if (user) {
+      this.router.navigate(['home']);
+      this.console.log(user)
     }
-    let loginData: ILogin = {
-      email: formLogin.value.email,
-      password: formLogin.value.password,
-    };
-
-    this.authService.login(loginData).subscribe({
-      next: (userData) => {
-        this.router.navigate(['home']);
-      },
-      error: (err) => {
-        this.errorMessage = err;
-        console.log(err);
-      },
-    });
   }
+
   ngOnDestroy() {
     // this.AuthUserSub.unsubscribe();
   }
@@ -63,12 +44,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
     this.authService.login(this.loginForm.value).subscribe({
       next: (userData) => {
-        const token = userData.token;
-        const authResult = userData.loggedUser;
-        const extractedUser: IUser = authResult.loggedUser;
-        this.storageService.saveToken(token);
-        this.storageService.saveUser(extractedUser);
-        this.console.log (userData)
         this.router.navigate(['home']);
       },
       error: (err) => {

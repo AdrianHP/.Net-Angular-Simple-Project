@@ -20,16 +20,13 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  AuthenticatedUser$ = new BehaviorSubject<IUser | null>(null);
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
     private router: Router
   ) {}
 
-  errorMesage = "";
-
-
+  errorMesage = '';
 
   login(loginData: ILogin): Observable<any> {
     return this.http.post<any>(AUTH_API + 'login', loginData).pipe(
@@ -37,7 +34,20 @@ export class AuthService {
         console.log(error);
         return throwError(() => new Error(error.error));
       }),
+      tap((userData) => {
+        const token = userData.token;
+        const authResult = userData.loggedUser;
+        const extractedUser: IUser = authResult.loggedUser;
+        this.storageService.saveToken(token);
+        this.storageService.saveUser(extractedUser);
+      })
     );
+  }
+  autoLogin() {
+    const userData = this.storageService.getUser();
+    if (!userData) {
+      return;
+    }
   }
 
   register(registerData: any): Observable<any> {
@@ -48,7 +58,12 @@ export class AuthService {
     }
   }
 
-  logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'logout', {}, httpOptions);
+  logout() {
+    return this.http.post(AUTH_API + 'logout', {}, httpOptions).subscribe({
+      next: () => {
+        this.storageService.clean();
+        this.router.navigate(['account/login']);
+      },
+    });
   }
 }
