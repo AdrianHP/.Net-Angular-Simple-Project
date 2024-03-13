@@ -13,6 +13,6 @@ namespace Data.DTOs.AccountDTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public string PasswordSHA1 { get; set; }
+        public string PasswordConfirm { get; set; }
     }
 }

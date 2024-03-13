@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>{{ isEdit ? "Edit Task" : "Add Task" }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="taskForm">
+    <div>
+      <mat-form-field class="fullWidth">
+        <mat-label>Task Name </mat-label>
+        <input matInput type="text" name="title" formControlName="title" />
+        <mat-error *ngIf="
+            this.taskForm.get('title')?.touched &&
+            this.taskForm.get('title')?.hasError('required')
+          ">field required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+      <mat-form-field class="fullWidth">
+        <mat-label>Due Date </mat-label>
+        <input matInput  [matDatepicker]="picker" matInput [matDatepickerFilter]="startDayFilter" name="dueDate" formControlName="dueDate" />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="
+            this.taskForm.get('dueDate')?.touched &&
+            this.taskForm.get('dueDate')?.hasError('required')
+          ">field required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="fullWidth">
+        <mat-label>Details</mat-label>
+        <textarea matInput placeholder="Ex. Ths task..." name="description" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+  <div *ngIf="isEdit">
+    <mat-label>Complete </mat-label>
+    <mat-slide-toggle [(ngModel)]="isComplete"></mat-slide-toggle>
+  </div>
+</div>
+
+<div class="mt-5" mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="taskForm.dirty && taskForm.errors" (click)="save()"
+    cdkFocusInitial>
+    Yes
+  </button>
+  <button mat-raised-button mat-dialog-close>No</button>
+</div>
+
+

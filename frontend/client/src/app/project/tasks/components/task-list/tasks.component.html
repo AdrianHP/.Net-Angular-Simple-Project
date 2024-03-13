@@ -1,0 +1,57 @@
+
+<mat-card>
+<div  fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="40px">
+<button mat-raised-button color="primary" (click)="addTask()">Add Task</button>
+<div class="filters">
+  <mat-form-field>
+    <input matInput #txtVal (keyup)="applyFilter(txtVal.value)" placeholder="Search By Title....">
+  </mat-form-field>
+</div>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column.field">
+      <th mat-header-cell *matHeaderCellDef>
+        <div style="display: flex; align-items: center">
+          <span *ngIf="column.icon" mat-sort-header>State</span>
+          <span *ngIf="!column.icon" mat-sort-header>{{column.name}}</span>
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="column.icon">
+          <div fxLayoutAlign=" center" *ngIf="!element[column.field]"> <mat-icon style="color: red;"
+              fontIcon="cancel"></mat-icon> Pending</div>
+          <div fxLayoutAlign=" center" *ngIf="element[column.field]"><mat-icon style="color: green;"
+              fontIcon="{{column.icon}}"></mat-icon>Completed</div>
+        </div>
+        <div *ngIf="!column.icon">{{ column.pipe ? (element[column.field]|date): element[column.field] }}</div>
+      </td>
+    </ng-container>
+    <ng-container [matColumnDef]="'actions'">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="editTask(element)">
+          <mat-icon mat-icon-button color="primary">edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteTask(element['id'])">
+          <mat-icon mat-icon-button color="warn">delete</mat-icon>
+        </button>
+
+      </td>
+    </ng-container>
+    <ng-container [matColumnDef]="'details'">
+      <th mat-header-cell *matHeaderCellDef>Details</th>
+      <td mat-cell *matCellDef="let element">
+        <button style="color: rgba(200, 200, 24, 0.833);" mat-icon-button (click)="taskDetails(element)">
+          <mat-icon mat-icon-button >my_library_books</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+  </table>
+
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 50]" showFirstLastButtons></mat-paginator>
+</div>
+</mat-card>

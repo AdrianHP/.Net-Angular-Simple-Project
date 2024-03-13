@@ -54,12 +54,7 @@ namespace Server.Controllers
                     LoggedUser = loggedUser
                 });
             }
-            catch (UserNotExistsException)
-            {
-                _logger.LogDebug($"User not exists. Please use a valid user");
-                return BadRequest();
-
-            }
+          
             catch (Exception exception)
             {
                 _logger.LogDebug(message: exception.Message);
@@ -81,7 +76,6 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout() 
          => await NoContent(async () =>
         {

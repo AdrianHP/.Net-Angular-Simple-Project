@@ -1,0 +1,16 @@
+<div class="header">
+  <div fxLayoutAlign="space-between none" style="width: 100%;" *ngIf="isLoged">
+    <div>
+      <button style="align-self: flex-start;" mat-button (click)="goHome()" color="primary">Home</button>
+      <button style="align-self: flex-start;" mat-button (click)="goTask()" color="primary">Tasks</button>
+
+    </div>
+    <button mat-button (click)="logOut()" color="primary">LogOut</button>
+
+  </div>
+
+  <div *ngIf="!isLoged">
+    <button mat-button (click)="logIn()" color="primary">LogIn</button>
+    <button mat-button (click)="register()" color="primary">Register</button>
+  </div>
+</div>
