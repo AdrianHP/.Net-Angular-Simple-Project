@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ITask } from '../../interfaces/task';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-form',
@@ -20,8 +21,6 @@ export class TaskFormComponent implements OnInit {
   ) {
     this.isEdit = data.isEdit;
 
-    console.log(data.task);
-
     this.taskForm = new FormGroup({
       id: new FormControl(),
       assignedUserId: new FormControl(),
@@ -34,6 +33,7 @@ export class TaskFormComponent implements OnInit {
     if (this.isEdit) {
       this.inputTask = data.task;
       this.taskForm.setValue(this.inputTask);
+      this.isComplete = this.inputTask.isCompleted;
     }
   }
 
@@ -43,5 +43,9 @@ export class TaskFormComponent implements OnInit {
     let result: ITask = this.taskForm.value;
     result.isCompleted = this.isComplete;
     this.dialogRef.close(Object.assign(result));
+  }
+
+  startDayFilter(d: Date | null): boolean {
+    return d ? d > new Date() : false;
   }
 }

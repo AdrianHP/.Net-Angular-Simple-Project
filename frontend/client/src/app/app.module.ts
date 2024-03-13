@@ -9,11 +9,16 @@ import { FormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HeaderComponent } from './project/shared/componets/header/header.component';
+import { MatButtonModule } from '@angular/material/button';
+import { HomeComponent } from './project/home/home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpClientModule,
     FlexLayoutModule,
+    MatButtonModule,
     BrowserAnimationsModule,
   ],
   providers: [],

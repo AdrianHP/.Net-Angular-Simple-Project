@@ -76,7 +76,6 @@ namespace Server.Controllers
 
         [HttpPost]
         [Route("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout() 
          => await NoContent(async () =>
         {

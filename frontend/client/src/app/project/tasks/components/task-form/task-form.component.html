@@ -16,7 +16,7 @@
     <div class="mt-5">
       <mat-form-field class="fullWidth">
         <mat-label>Due Date </mat-label>
-        <input matInput [matDatepicker]="picker" name="dueDate" formControlName="dueDate" />
+        <input matInput  [matDatepicker]="picker" matInput [matDatepickerFilter]="startDayFilter" name="dueDate" formControlName="dueDate" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -47,3 +47,5 @@
   </button>
   <button mat-raised-button mat-dialog-close>No</button>
 </div>
+
+

@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 @Component({
   selector: 'app-tasks',
@@ -21,6 +22,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 })
 export class TasksComponent implements OnInit {
   errorMessage = '';
+  taskStateFilter = 'all_inclusive';
 
   public columns: MatColumnDef;
   public tasks: ITask[];
@@ -41,6 +43,7 @@ export class TasksComponent implements OnInit {
     {
       field: 'isCompleted',
       name: 'Is Completed',
+      icon: 'check_circle',
     },
   ];
 
@@ -50,6 +53,7 @@ export class TasksComponent implements OnInit {
     'dueDate',
     'isCompleted',
     'actions',
+    'details'
   ];
 
   public columnsFilters = {};
@@ -69,7 +73,9 @@ export class TasksComponent implements OnInit {
     this.dataSource = new MatTableDataSource<ITask>();
   }
   ngOnInit(): void {
+    console.log(new Date());
     this.fetchTasks();
+    this.dataSource.filterPredicate = this.filterData;
   }
 
   ngAfterViewInit(): void {
@@ -83,7 +89,6 @@ export class TasksComponent implements OnInit {
       .then((userData: any) => {
         this.dataSource.data = userData;
         this.cd.detectChanges();
-        console.log(userData);
       })
       .catch((err: any) => {
         this.errorMessage = err;
@@ -125,6 +130,15 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  taskDetails(data: ITask) {
+    var dialogData = {
+      task: data,
+    };
+    this.dialog.open(TaskDetailsComponent, {
+      data: dialogData,
+    });
+  }
+
   deleteTask(id: any) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
 
@@ -135,5 +149,18 @@ export class TasksComponent implements OnInit {
         });
       }
     });
+  }
+
+  filterData(data: ITask, filter: string): boolean {
+    var result = true;
+
+    return data.title.toLowerCase().includes(filter);
+    return true;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

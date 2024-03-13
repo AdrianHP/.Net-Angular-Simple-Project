@@ -23,6 +23,9 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {  MatSelectModule } from '@angular/material/select';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     TasksComponent,
@@ -34,8 +37,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     CommonModule,
     TaskRoutingModule,
     MatTableModule,
+    MatSelectModule,
     CdkTableModule,
     MatPaginatorModule,
+    MatCardModule,
     MatSortModule,
     MatMenuModule,
     MatIconModule,
@@ -50,6 +55,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatNativeDateModule,
     MatSlideToggleModule,
     FormsModule,
+    FlexLayoutModule,
   ],
   providers: [MatDialog, TaskService],
 })

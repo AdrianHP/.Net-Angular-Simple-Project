@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, flatMap, tap, throwError } from 'rxjs';
 import { ILogin } from '../interfaces/login';
 import { IUserRegistration } from '../interfaces/userRegistration';
 import { IUser } from '../interfaces/user';
@@ -27,11 +27,11 @@ export class AuthService {
   ) {}
 
   errorMesage = '';
+  @Output() logChange: EventEmitter<any> = new EventEmitter();
 
   login(loginData: ILogin): Observable<any> {
     return this.http.post<any>(AUTH_API + 'login', loginData).pipe(
       catchError((error) => {
-        console.log(error);
         return throwError(() => new Error(error.error));
       }),
       tap((userData) => {
@@ -40,6 +40,7 @@ export class AuthService {
         const extractedUser: IUser = authResult.loggedUser;
         this.storageService.saveToken(token);
         this.storageService.saveUser(extractedUser);
+        this.logChange.emit('login');
       })
     );
   }
@@ -63,7 +64,9 @@ export class AuthService {
       next: () => {
         this.storageService.clean();
         this.router.navigate(['account/login']);
+        this.logChange.emit('logout');
       },
     });
   }
+
 }

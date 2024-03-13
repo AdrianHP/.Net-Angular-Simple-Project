@@ -5,6 +5,7 @@ import { ProjectRoutes } from './project-routing';
 import { LoginComponent } from './account/components/login/login.component';
 import { AppComponent } from './app.component';
 import { authGuard } from './utils/auth.guard';
+import { HomeComponent } from './project/home/home/home.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   {
     path: 'task',
     loadChildren: () =>import('./project/tasks/tasks.module').then((m) => m.TasksModule),
+    canActivate: [authGuard]
   },
   {
     path: '',
@@ -23,35 +25,10 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: AppComponent ,
+    component: HomeComponent ,
     canActivate: [authGuard],
   },
-  // {
-  //   path: '',
-  //   redirectTo:'/home',
-  //   pathMatch: 'full'
-  // },
 
-  // {
-  //   path: 'home',
-  //   component: HomeComponent ,
-  //   canActivate: [authGuard],
-  //   data: {roles: ['ROLE_ADMIN','ROLE_USER']}
-  // },
-  // {
-  //   path: 'admin',
-  //   component: AdminComponent,
-  //   canActivate: [authGuard],
-  //   data: {roles: ['ROLE_ADMIN']}
-  // },
-  // {
-  //   path: 'forbidden',
-  //   component: AccessDeniedComponent
-  // },
-  // {
-  //   path: '**',
-  //   redirectTo: '/home'
-  // }
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes)],

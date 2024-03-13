@@ -18,10 +18,8 @@ export class CustomValidators {
 
 
     if ( password !== null  && regex.test(password)){
-      console.log('here');
       return null;
     } else {
-      console.log('has error ');
       return {weaksPassword: true };
     }
   }
